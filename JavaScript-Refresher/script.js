@@ -47,3 +47,13 @@ printMyName1('Atefeh', 32);
 // };
 const multiply = number => number * 2;
 console.log(multiply(2));
+
+//////////////////////////////////
+// Exports & Imports (Modules)
+export default person;
+export const baseData = 10;
+import person from './person.js';
+import prs from './person.js';
+import { smth } from './utility.js';
+import { smth as Smth } from './utility.js';
+import * as bundled from './utility.js';
