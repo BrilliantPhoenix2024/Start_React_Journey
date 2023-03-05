@@ -50,10 +50,48 @@ console.log(multiply(2));
 
 //////////////////////////////////
 // Exports & Imports (Modules)
-export default person;
-export const baseData = 10;
-import person from './person.js';
-import prs from './person.js';
-import { smth } from './utility.js';
-import { smth as Smth } from './utility.js';
-import * as bundled from './utility.js';
+// export default person;
+// export const baseData = 10;
+// import person from './person.js';
+// import prs from './person.js';
+// import { smth } from './utility.js';
+// import { smth as Smth } from './utility.js';
+// import * as bundled from './utility.js';
+
+/////////////////////////////
+// Understanding Classes
+class Person {
+  constructor() {
+    this.name = 'Atefeh';
+  }
+  printMyName() {
+    console.log(this.name);
+  }
+}
+
+const person = new Person();
+person.printMyName();
+
+class Human {
+  constructor() {
+    this.gender = 'female';
+  }
+  printGender() {
+    console.log(this.gender);
+  }
+}
+
+class Person2 extends Human {
+  constructor() {
+    super();
+    this.name = 'Barf';
+    this.gender = 'male';
+  }
+  printMyName() {
+    console.log(this.name);
+  }
+}
+
+const person2 = new Person2();
+person2.printMyName();
+person2.printGender();
