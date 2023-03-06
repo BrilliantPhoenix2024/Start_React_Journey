@@ -59,7 +59,7 @@ console.log(multiply(2));
 // import * as bundled from './utility.js';
 
 /////////////////////////////
-// Understanding Classes
+// Understanding Classes (ES6)
 class Person {
   constructor() {
     this.name = 'Atefeh';
@@ -95,3 +95,22 @@ class Person2 extends Human {
 const person2 = new Person2();
 person2.printMyName();
 person2.printGender();
+
+///////////////////////////////////
+// Classes, Properties and Methods (ES7)
+class Human1 {
+  gender = 'female';
+
+  printGender = () => {
+    console.log(this.gender);
+  };
+}
+
+class Person3 extends Human1 {
+  name = 'Barf';
+  gender = 'male';
+
+  printMyName = () => {
+    console.log(this.name);
+  };
+}
