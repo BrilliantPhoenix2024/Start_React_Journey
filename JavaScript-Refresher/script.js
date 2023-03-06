@@ -118,10 +118,10 @@ class Person3 extends Human1 {
 //////////////////////////////////
 // The Spread and Rest Operators
 // Spread Arrays
-const numbers = [1, 2, 3];
-const newNumbers = [...numbers, 4];
+// const numbers = [1, 2, 3];
+// const newNumbers = [...numbers, 4];
 // const newNumbers = [numbers, 4];
-console.log(newNumbers);
+// console.log(newNumbers);
 
 const person = {
   name: 'Atefeh',
@@ -137,3 +137,17 @@ const filter = (...args) => {
   return args.filter(el => el === 1);
 };
 console.log(filter(1, 2, 3));
+
+///////////////////////////////
+// Destructuring
+// Array Destructuring
+const numbers = [1, 2, 3];
+// [num1, num2] = numbers;
+// console.log(num1, num2);
+[num1, , num3] = numbers;
+console.log(num3);
+console.log(num1, num3);
+// Object Destructuring
+const { userName } = { userName: 'Atefeh', age: 32 };
+console.log(userName);
+// console.log(age);
