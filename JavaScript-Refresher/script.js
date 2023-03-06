@@ -123,20 +123,20 @@ class Person3 extends Human1 {
 // const newNumbers = [numbers, 4];
 // console.log(newNumbers);
 
-const person = {
-  name: 'Atefeh',
-};
+// const person = {
+//   name: 'Atefeh',
+// };
 // Spread Objects
-const newPerson = {
-  ...person,
-  age: 32,
-};
-console.log(newPerson);
-// The Rest Operators
-const filter = (...args) => {
-  return args.filter(el => el === 1);
-};
-console.log(filter(1, 2, 3));
+// const newPerson = {
+//   ...person,
+//   age: 32,
+// };
+// console.log(newPerson);
+// // The Rest Operators
+// const filter = (...args) => {
+//   return args.filter(el => el === 1);
+// };
+// console.log(filter(1, 2, 3));
 
 ///////////////////////////////
 // Destructuring
@@ -151,3 +151,24 @@ console.log(num1, num3);
 const { userName } = { userName: 'Atefeh', age: 32 };
 console.log(userName);
 // console.log(age);
+
+//////////////////////////////
+// Reference and Primitive Types
+// Numbers , Strings, Booleans
+const number = 1;
+const num2 = number;
+console.log(num2); // Real copy
+// Objects, Arrays
+const person = {
+  name: 'Atefeh',
+};
+const secondPerson = person;
+person.name = 'Barf';
+console.log(secondPerson); // NOT Real Copy, is a Pointer to a place of memory Also for Arrays too.
+const person1 = {
+  name: 'Atefeh',
+};
+const secondPerson1 = { ...person1 }; // Real Copy
+person1.name = 'Barf';
+console.log(secondPerson1);
+console.log(person1);
