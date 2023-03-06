@@ -60,17 +60,17 @@ console.log(multiply(2));
 
 /////////////////////////////
 // Understanding Classes (ES6)
-class Person {
-  constructor() {
-    this.name = 'Atefeh';
-  }
-  printMyName() {
-    console.log(this.name);
-  }
-}
+// class Person {
+//   constructor() {
+//     this.name = 'Atefeh';
+//   }
+//   printMyName() {
+//     console.log(this.name);
+//   }
+// }
 
-const person = new Person();
-person.printMyName();
+// const person = new Person();
+// person.printMyName();
 
 class Human {
   constructor() {
@@ -114,3 +114,26 @@ class Person3 extends Human1 {
     console.log(this.name);
   };
 }
+
+//////////////////////////////////
+// The Spread and Rest Operators
+// Spread Arrays
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4];
+// const newNumbers = [numbers, 4];
+console.log(newNumbers);
+
+const person = {
+  name: 'Atefeh',
+};
+// Spread Objects
+const newPerson = {
+  ...person,
+  age: 32,
+};
+console.log(newPerson);
+// The Rest Operators
+const filter = (...args) => {
+  return args.filter(el => el === 1);
+};
+console.log(filter(1, 2, 3));
