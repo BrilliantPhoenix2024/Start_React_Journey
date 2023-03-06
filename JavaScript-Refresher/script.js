@@ -141,15 +141,15 @@ class Person3 extends Human1 {
 ///////////////////////////////
 // Destructuring
 // Array Destructuring
-const numbers = [1, 2, 3];
+// const numbers = [1, 2, 3];
 // [num1, num2] = numbers;
 // console.log(num1, num2);
-[num1, , num3] = numbers;
-console.log(num3);
-console.log(num1, num3);
+// [num1, , num3] = numbers;
+// console.log(num3);
+// console.log(num1, num3);
 // Object Destructuring
-const { userName } = { userName: 'Atefeh', age: 32 };
-console.log(userName);
+// const { userName } = { userName: 'Atefeh', age: 32 };
+// console.log(userName);
 // console.log(age);
 
 //////////////////////////////
@@ -172,3 +172,12 @@ const secondPerson1 = { ...person1 }; // Real Copy
 person1.name = 'Barf';
 console.log(secondPerson1);
 console.log(person1);
+
+//////////////////////////////
+// Array Functions
+const numbers = [1, 2, 3];
+const doubleNumArray = numbers.map(num => {
+  return num * 2;
+}); // Completely NEW Arrays not change the old one
+console.log(numbers);
+console.log(doubleNumArray);
