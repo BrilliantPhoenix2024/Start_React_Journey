@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import ExpenseItem from './components/ExpenseItem';
 
 function App() {
   return (
@@ -17,7 +18,10 @@ function App() {
         >
           Learn React
         </a>
+        <p>let's get started!</p>
       </header>
+      {/* This is a Custom made Components (an HTML element) with just starting with uppercase Character */}
+      <ExpenseItem></ExpenseItem>
     </div>
   );
 }
