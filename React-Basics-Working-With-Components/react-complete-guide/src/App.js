@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Expenses from './components/Expenses';
+import Expenses from './components/Expenses/Expenses';
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -12,17 +12,17 @@ function App() {
     { title: 'New Laptop', amount: 197.69, date: new Date(2023, 12, 9) },
   ];
 
-  return React.createElement(
-    'div',
-    {},
-    React.createElement(Expenses, { items: expenses })
-  );
-
-  // return (
-  //   <div>
-  //     <Expenses items={expenses}></Expenses>
-  //   </div>
+  // return React.createElement(
+  //   'div',
+  //   {},
+  //   React.createElement(Expenses, { items: expenses })
   // );
+
+  return (
+    <div>
+      <Expenses items={expenses}></Expenses>
+    </div>
+  );
 }
 
 export default App;
