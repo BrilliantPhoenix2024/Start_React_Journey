@@ -4,7 +4,7 @@ import Expenses from './components/Expenses/Expenses';
 // import logo from './logo.svg';
 // import './App.css';
 
-function App() {
+const App = () => {
   const expenses = [
     { title: 'Car Insurance', amount: 297.69, date: new Date(2028, 2, 9) },
     { title: 'Toilet Paper', amount: 94.12, date: new Date(2023, 2, 9) },
@@ -23,6 +23,6 @@ function App() {
       <Expenses items={expenses}></Expenses>
     </div>
   );
-}
+};
 
 export default App;

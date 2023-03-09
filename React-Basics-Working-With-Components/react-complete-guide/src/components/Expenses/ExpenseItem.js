@@ -5,7 +5,7 @@ import Card from '../UI/Card';
 import './ExpenseItem.css';
 
 // A Components in React is just a JavaScript Function.
-function ExpenseItem(props) {
+const ExpenseItem = props => {
   return (
     <Card className="expense-item">
       <ExpenseDate date={props.date}></ExpenseDate>
@@ -16,6 +16,6 @@ function ExpenseItem(props) {
       </div>
     </Card>
   );
-}
+};
 
 export default ExpenseItem;
