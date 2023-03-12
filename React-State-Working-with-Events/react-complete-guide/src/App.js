@@ -1,8 +1,7 @@
 import React from 'react';
 
+import NewExpense from './components/NewExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
-// import logo from './logo.svg';
-// import './App.css';
 
 const App = () => {
   const expenses = [
@@ -12,14 +11,9 @@ const App = () => {
     { title: 'New Laptop', amount: 197.69, date: new Date(2023, 12, 9) },
   ];
 
-  // return React.createElement(
-  //   'div',
-  //   {},
-  //   React.createElement(Expenses, { items: expenses })
-  // );
-
   return (
     <div>
+      <NewExpense></NewExpense>
       <Expenses items={expenses}></Expenses>
     </div>
   );
