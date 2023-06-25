@@ -27,7 +27,10 @@ function App() {
   return (
     <React.Fragment>
       <section>
+<<<<<<< HEAD
         <button>Fetch Movies</button>
+=======
+>>>>>>> 99cdf4e87034833d236108858750d12e5fd32db6
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
       <section>
