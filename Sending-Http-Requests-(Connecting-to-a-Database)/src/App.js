@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
+import AddMovie from './components/AddMovie';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -12,7 +13,7 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://swapi.dev/api/films/');
+      const response = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json');
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
@@ -38,6 +39,10 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
+  function addMoviesHandler(movie) {
+    console.log(movie);
+  }
+
   let content = <p>Found no movies!</p>;
 
   if (movies.length > 0) {
@@ -54,6 +59,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovies={addMoviesHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
