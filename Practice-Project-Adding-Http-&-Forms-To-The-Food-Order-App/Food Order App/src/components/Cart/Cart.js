@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
-import classes from "./Cart.module.css";
+import styles from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
 import Checkout from "./Checkout";
 
@@ -25,8 +25,18 @@ const Cart = (props) => {
     setIsCheckout(true);
   };
 
+  const submitOrderHandler = (userData) => {
+    fetch("https://react-http-6b4a6.firebaseio.com/orders.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items,
+      }),
+    });
+  };
+
   const cartItems = (
-    <ul className={classes["cart-items"]}>
+    <ul className={styles["cart-items"]}>
       {cartCtx.items.map((item) => (
         <CartItem
           key={item.id}
@@ -41,12 +51,12 @@ const Cart = (props) => {
   );
 
   const modalActions = (
-    <div className={classes.actions}>
-      <button className={classes["button--alt"]} onClick={props.onClose}>
+    <div className={styles.actions}>
+      <button className={styles["button--alt"]} onClick={props.onClose}>
         Close
       </button>
       {hasItems && (
-        <button className={classes.button} onClick={orderHandler}>
+        <button className={styles.button} onClick={orderHandler}>
           Order
         </button>
       )}
@@ -56,11 +66,16 @@ const Cart = (props) => {
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
-      <div className={classes.total}>
+      <div className={styles.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckOut && <Checkout onClick={props.onClose}></Checkout>}
+      {isCheckOut && (
+        <Checkout
+          onconfirm={submitOrderHandler}
+          onCancel={props.onClose}
+        ></Checkout>
+      )}
       {!isCheckOut && modalActions}
     </Modal>
   );

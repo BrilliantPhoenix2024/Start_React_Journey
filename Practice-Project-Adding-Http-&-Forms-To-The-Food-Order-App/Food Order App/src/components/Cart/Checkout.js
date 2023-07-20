@@ -48,7 +48,12 @@ const Checkout = (props) => {
       return;
     }
 
-    // submit cart data
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      postalCode: enteredPostalCode,
+    });
   };
 
   const nameControlStyles = `${styles.control}${
@@ -68,7 +73,7 @@ const Checkout = (props) => {
   }`;
 
   return (
-    <form className={classes.form} onSubmit={confirmHandler}>
+    <form className={styles.form} onSubmit={confirmHandler}>
       <div className={nameControlStyles}>
         <label htmlFor="name">Your Name</label>
         <input type="text" id="name" ref={nameInputRef} />
@@ -96,7 +101,7 @@ const Checkout = (props) => {
       </div>
 
       <div className={styles.actions}>
-        <button type="button" onClick={props.onCancel}>
+        <button type="button" onCancel={props.onCancel}>
           Cancel
         </button>
         <button className={styles.submit}>Confirm</button>
