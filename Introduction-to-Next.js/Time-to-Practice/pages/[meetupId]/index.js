@@ -1,32 +1,37 @@
-import { Fragment } from "react";
+import { MongoClient, ObjectId } from "mongodb";
+
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
-function MeetupDetails() {
+function MeetupDetails(props) {
   return (
     <MeetupDetail
-      image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCA53PPrWa1xnn18EV4TWzEenojLDGL7PHXQ&usqp=CAU"
-      title="First Meetup"
-      address="Some Street 5, Some City"
-      description="This is the frist meetup"
+      image={props.meetupData.image}
+      title={props.meetupData.title}
+      address={props.meetupData.address}
+      description={props.meetupData.description}
     />
   );
 }
 
 export async function getStaticPath() {
+  const client = await MongoClient.connect(
+    "mongodb+srv://<username>:<password>@cluster0.ntrwp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupId: "m1",
-        },
+    paths: meetups.map((meetup) => ({
+      params: {
+        meetupId: meetup._id.toString(),
       },
-      {
-        params: {
-          meetupId: "m2",
-        },
-      },
-    ],
+    })),
   };
 }
 
@@ -35,15 +40,27 @@ export async function getStaticProps(context) {
 
   const meetupId = context.params.meetupId;
 
+  const client = await MongoClient.connect(
+    "mongodb+srv://<username>:<password>@cluster0.ntrwp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const selectedMeetup = await meetupsCollection.findOne({
+    _id: ObjectId(meetupId),
+  });
+
+  client.close();
+
   return {
     props: {
       meetupData: {
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCA53PPrWa1xnn18EV4TWzEenojLDGL7PHXQ&usqp=CAU",
-        id: meetupId,
-        title: "First Meetup",
-        address: "Some Street 5, Some City",
-        description: "This is the frist meetup",
+        id: selectedMeetup._id.toString(),
+        title: selectedMeetup.title,
+        address: selectedMeetup.address,
+        image: selectedMeetup.image,
+        description: selectedMeetup.description,
       },
     },
   };
