@@ -55,3 +55,29 @@ function add(a: number, b: number): number {
 function output(value: any) {
   console.log(value);
 }
+
+// Generics
+
+function insertAtBeginning(array: any[], value: any) {
+  const newArray = [value, ...array];
+  return newArray;
+}
+
+const demoArray = [1, 2, 3];
+
+const updatedArray = insertAtBeginning(demoArray, -1); // [-1,1,2,3]
+
+updatedArray[0].split("");
+
+function insertAtBeginning1<T>(array: T[], value: T) {
+  const newArray = [value, ...array];
+  return newArray;
+}
+
+const demoArray1 = [1, 2, 3];
+
+const updatedArray1 = insertAtBeginning1(demoArray1, -1); // [-1,1,2,3]
+const stringArray = insertAtBeginning1(["a", "b", "c"], "d");
+
+updatedArray1[0].split("");
+stringArray[0].split("");
