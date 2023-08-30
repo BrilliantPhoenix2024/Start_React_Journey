@@ -21,7 +21,11 @@ const Ingredients = () => {
         }
         setUserIngredients(loadedIngredients);
       });
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    console.log("rendering", userIngredients);
+  }, [userIngredients]);
 
   const addIngredientHandler = (ingredient) => {
     fetch("https://react-hooks-update.firebaseio.com/ingredients.json", {
