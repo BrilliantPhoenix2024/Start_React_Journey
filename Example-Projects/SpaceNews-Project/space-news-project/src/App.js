@@ -19,7 +19,14 @@ function App() {
       </div>
       <div className="newsContainer">
         {newsList.map((val, key) => {
-          return <div key={key}>{val.title}</div>;
+          return (
+            <div key={key}>
+              <h3>{val.title}</h3>
+              <img src={val.imageUrl} />
+              <p>{val.summary}</p>
+              <h4>{val.publishedAt}</h4>
+            </div>
+          );
         })}
       </div>
     </div>
