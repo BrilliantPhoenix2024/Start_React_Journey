@@ -32,3 +32,8 @@ button {
 button:hover {
   cursor: pointer;
 }
+
+.Menu,
+.Quiz h1 {
+  color: white;
+}

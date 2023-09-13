@@ -10,6 +10,16 @@ function Quiz() {
     setOptionChosen(option);
   };
 
+  const nextQuestion = () => {
+    if (Questions[currentQuestion].answer == optionChosen) {
+      alert("You got the correct answer!");
+    } else {
+      alert("Wrong answer.");
+    }
+
+    setCurrentQuestion(currentQuestion + 1);
+  };
+
   return (
     <div className="Quiz">
       <h1>{Questions[currentQuestion].prompt}</h1>
@@ -43,6 +53,7 @@ function Quiz() {
           {Questions[currentQuestion].optionD}
         </button>
       </div>
+      <button onClick={nextQuestion}>Next Question</button>
     </div>
   );
 }
