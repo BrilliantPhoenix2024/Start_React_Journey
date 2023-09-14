@@ -39,3 +39,8 @@ button:hover {
 .Quiz h1 {
   color: white;
 }
+
+#nextBtn,
+#finishBtn {
+  width: 200px;
+}

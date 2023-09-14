@@ -22,6 +22,9 @@ function Quiz() {
   };
 
   const finishQuiz = () => {
+        if (Questions[currentQuestion].answer == optionChosen) {
+          setScore(score + 1);
+        }
     setGameState("finished");
   };
 
@@ -60,9 +63,13 @@ function Quiz() {
       </div>
 
       {currentQuestion == Questions.length - 1 ? (
-        <button onClick={finishQuiz}>Finish Quiz</button>
+        <button onClick={finishQuiz} id="nextBtn">
+          Finish Quiz
+        </button>
       ) : (
-        <button onClick={nextQuestion}>Next Question</button>
+        <button onClick={nextQuestion} id="finishBtn">
+          Next Question
+        </button>
       )}
     </div>
   );
