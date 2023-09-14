@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Menu from "./components/Menu";
 import Quiz from "./components/Quiz";
+import EndScreen from "./components/EndScreen";
 import { GameStateContext } from "./helpers/Contexts";
 import "./App.css";
 
@@ -25,6 +26,7 @@ function App() {
       >
         {gameState === "menu" && <Menu />}
         {gameState === "playing" && <Quiz />}
+        {gameState === "finished" && <EndScreen />}
       </GameStateContext.Provider>
     </div>
   );

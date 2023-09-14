@@ -8,7 +8,8 @@
 }
 
 .Menu,
-.Quiz {
+.Quiz,
+.EndScreen {
   width: 500px;
   height: 500px;
   border-radius: 10px;
@@ -34,6 +35,7 @@ button:hover {
 }
 
 .Menu,
+.EndScreen,
 .Quiz h1 {
   color: white;
 }
