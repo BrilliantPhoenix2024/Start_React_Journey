@@ -1,3 +1,48 @@
-.App{
-    text-align: center;
+.App {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.search-section {
+  flex: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: cadetblue;
+  color: white;
+}
+
+.deals-section {
+  width: 100%;
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+input,
+button {
+  width: 300px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  margin: 20px;
+  font-size: 22px;
+}
+
+input {
+  padding-left: 10px;
+}
+
+button {
+  cursor: pointer;
 }
