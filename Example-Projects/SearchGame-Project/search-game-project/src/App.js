@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [gameTitle, setGameTitle] = useState("");
   const [searchedGames, setSearchedGames] = useState([]);
+  const [gameDeals, setGameDeals] = useState([]);
 
   const searchGame = () => {
     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gameTitle}&limit=3`)
@@ -40,6 +41,18 @@ function App() {
       </section>
       <section className="deals-section">
         <h1>Latest Deals</h1>
+        <div className="games">
+          {gameDeals.map((game, key) => {
+            return (
+              <div className="game" key={key} id="deals">
+                <h3> {game.title}</h3>
+                <p>Normal Price: {game.normalPrice}</p>
+                <p>Deal Price: {game.salePrice}</p>
+                <h3>You Save {game.savings.substr(0, 2)}%</h3>
+              </div>
+            );
+          })}
+        </div>
       </section>
     </div>
   );
