@@ -26,15 +26,17 @@ function App() {
         />
         <button onClick={searchGame}>Search Game Title</button>
 
-        <di className="games">
+        <div className="games">
           {searchedGames.map((game, key) => {
             return (
               <div className="game" key={key}>
                 {game.external}
+                <img src={game.thumb} />
+                {game.cheapest}
               </div>
             );
           })}
-        </di>
+        </div>
       </section>
       <section className="deals-section">
         <h1>Latest Deals</h1>
