@@ -3,12 +3,13 @@ import "./App.css";
 
 function App() {
   const [gameTitle, setGameTitle] = useState("");
+  const [searchedGames, setSearchedGames] = useState([]);
 
   const searchGame = () => {
-    fetch(`https://www.cheapshark.com/api/1.0/games?title=${gameTitle}`)
+    fetch(`https://www.cheapshark.com/api/1.0/games?title=${gameTitle}&limit=3`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setSearchedGames(data);
       });
   };
 
@@ -24,6 +25,16 @@ function App() {
           }}
         />
         <button onClick={searchGame}>Search Game Title</button>
+
+        <di className="games">
+          {searchedGames.map((game, key) => {
+            return (
+              <div className="game" key={key}>
+                {game.external}
+              </div>
+            );
+          })}
+        </di>
       </section>
       <section className="deals-section">
         <h1>Latest Deals</h1>
