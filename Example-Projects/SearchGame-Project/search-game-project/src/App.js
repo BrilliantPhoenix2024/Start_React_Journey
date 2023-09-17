@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -13,6 +13,17 @@ function App() {
         setSearchedGames(data);
       });
   };
+
+  useEffect(() => {
+    fetch(
+      `https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=20&pageSise=3`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchedGames(data);
+        console.log(data);
+      });
+  }, []);
 
   return (
     <div className="App">
