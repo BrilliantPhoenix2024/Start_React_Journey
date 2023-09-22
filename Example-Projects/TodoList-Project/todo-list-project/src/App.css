@@ -31,3 +31,12 @@ li {
   font-family: monospace;
   font-size: 23px;
 }
+
+#task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #da5d5d;
+  color: white;
+}
