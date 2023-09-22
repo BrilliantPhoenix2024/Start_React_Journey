@@ -22,6 +22,11 @@ function App() {
         <button onClick={addTask}>Add Task</button>
       </div>
       <hr />
+      <ul>
+        {todoList.map((value, key) => {
+          return <li key={key}>{value}</li>;
+        })}
+      </ul>
     </div>
   );
 }
