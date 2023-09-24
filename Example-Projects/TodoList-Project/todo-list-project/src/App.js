@@ -39,6 +39,9 @@ function App() {
           ref={inputTask}
           type="text"
           placeholder="Task..."
+          onKeyDown={(event) => {
+            if (event.keyCode == 13) addTask();
+          }}
           onChange={(event) => {
             setCurrentTask(event.target.value);
           }}
@@ -51,10 +54,12 @@ function App() {
           return (
             <div id="task">
               <li key={key}>{value.task}</li>
-              <button onClick={() => completeTask(value.task)}>
+              <button id="complete" onClick={() => completeTask(value.task)}>
                 Completed
               </button>
-              <button onClick={() => deleteTask(value.task)}>X</button>
+              <button id="delete" onClick={() => deleteTask(value.task)}>
+                X
+              </button>
               {value.completed ? (
                 <h5>Task Completed</h5>
               ) : (
