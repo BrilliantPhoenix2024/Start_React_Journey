@@ -1,10 +1,10 @@
 import "./App.css";
-import IncreaseAge from "./Components/IncreaseAge/IncreaseAge";
+import GetInput from "./Components/GetInput/GetInput";
 
 function App() {
   return (
     <div className="App">
-      <IncreaseAge />
+      <GetInput />
     </div>
   );
 }
