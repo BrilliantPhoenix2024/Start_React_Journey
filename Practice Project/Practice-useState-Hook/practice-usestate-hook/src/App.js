@@ -1,10 +1,10 @@
 import "./App.css";
-import GetInput from "./Components/GetInput/GetInput";
+import ToggleText from "./Components/ToggleText/ToggleText";
 
 function App() {
   return (
     <div className="App">
-      <GetInput />
+      <ToggleText />
     </div>
   );
 }
