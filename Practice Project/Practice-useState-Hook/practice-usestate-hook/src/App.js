@@ -1,10 +1,10 @@
 import "./App.css";
-import ToggleText from "./Components/ToggleText/ToggleText";
+import ChangeStyle from "./Components/ChangeStyle/ChangeStyle";
 
 function App() {
   return (
     <div className="App">
-      <ToggleText />
+      <ChangeStyle />
     </div>
   );
 }
