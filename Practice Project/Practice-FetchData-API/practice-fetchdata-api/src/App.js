@@ -1,10 +1,10 @@
 import "./App.css";
-import FetchData from "./Components/FetchData/FetchData";
+import FetchDataWithInput from "./Components/FetchDataWithInput/FetchDataWithInput";
 
 function App() {
   return (
     <div className="App">
-      <FetchData />
+      <FetchDataWithInput />
     </div>
   );
 }
