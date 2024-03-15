@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./Components/Navigation/Nav";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
-import Product from "./Pages/Product";
+import Products from "./Pages/Products";
 import ProductDtails from "./Pages/ProductDtails";
 import Error from "./Pages/Error";
 
@@ -15,9 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/product" element={<Product />}>
-            <Route path=":productId" element={<ProductDtails />} />
-          </Route>
+          <Route path="/products" element={<Products />} />
+          <Route exact path="/products/:productId" element={<ProductDtails />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
