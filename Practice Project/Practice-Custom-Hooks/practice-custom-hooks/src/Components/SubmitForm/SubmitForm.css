@@ -1,0 +1,14 @@
+div {
+  display: grid;
+  width: 70%;
+  margin: auto;
+}
+
+form {
+  display: grid;
+  margin-top: 25px;
+}
+
+input {
+  font-size: 20px;
+}
