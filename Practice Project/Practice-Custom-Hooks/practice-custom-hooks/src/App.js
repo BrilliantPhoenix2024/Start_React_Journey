@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useToggle } from "./Customs/useToggle/useToggle";
 
 function App() {
+  const { state: isVisible, toggle } = useToggle();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={toggle}>{isVisible ? "Hide" : "Show"}</button>
+      {isVisible && <h1>This is my hidden text</h1>}
     </div>
   );
 }
