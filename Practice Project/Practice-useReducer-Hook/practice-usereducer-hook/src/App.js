@@ -1,5 +1,5 @@
 import "./App.css";
-import CatFact from "./CatFact/CatFact";
+import CatFact from "./Components/CatFact/CatFact";
 
 function App() {
   return (

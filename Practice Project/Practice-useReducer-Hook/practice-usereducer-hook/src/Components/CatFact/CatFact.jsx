@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react";
 import axios from "axios";
-import { intialState, useReduce } from "../Components/useReduce/useReduce";
+import { intialState, useReduce } from "../useReduce/useReduce";
 
 const CatFact = () => {
   //   const [loading, setLoading] = useState(false);
