@@ -1,10 +1,9 @@
 import "./App.css";
-import CatFact from "./Components/CatFact/CatFact";
-
+import Form from "./Components/Form/Form";
 function App() {
   return (
     <div className="App">
-      <CatFact />
+      <Form />
     </div>
   );
 }
