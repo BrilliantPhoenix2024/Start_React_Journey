@@ -5,3 +5,7 @@
 ul {
   list-style: none;
 }
+
+a.active {
+  color: red;
+}
