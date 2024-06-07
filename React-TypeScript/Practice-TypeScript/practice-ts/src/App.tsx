@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Person from "./Components/Person/Person";
+import { Country } from "./Components/Person/Person";
 
 function App() {
+  const getAge = (name: string): number => {
+    return 25;
+  };
+
+  const age: number = getAge("Atefeh");
+  console.log(age);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Person
+        name={"Atefeh"}
+        email={"hello@hello.com"}
+        age={35}
+        isMarried={true}
+        courses={["Python", "React", "Django"]}
+        country={Country.Italy}
+      />
     </div>
   );
 }
