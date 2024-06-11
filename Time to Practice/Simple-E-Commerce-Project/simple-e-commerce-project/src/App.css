@@ -1,3 +1,11 @@
 .App {
   text-align: center;
 }
+
+a.active {
+  color: red;
+}
+
+ul {
+  list-style: none;
+}
