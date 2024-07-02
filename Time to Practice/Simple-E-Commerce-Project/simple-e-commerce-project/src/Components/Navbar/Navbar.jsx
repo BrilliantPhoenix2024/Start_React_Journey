@@ -4,8 +4,16 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import "./Navbar.css";
+import { useContext } from "react";
+import { ShopContextCustom } from "../../context/shopContextCustom";
 
-function NavbarComponent() {
+const NavbarComponent = () => {
+  const { cartItems } = useContext(ShopContextCustom);
+  const itemCount = cartItems.reduce((prevValue, currentValue) => {
+    return prevValue + currentValue.count;
+  }, 0);
+
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
@@ -24,12 +32,15 @@ function NavbarComponent() {
 
             <NavLink to="/cart" style={{ textDecoration: "none" }}>
               <FontAwesomeIcon icon={faShoppingCart} />
+              {itemCount > 0 && (
+                <span className="cart-item-count">{itemCount}</span>
+              )}
             </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-}
+};
 
 export default NavbarComponent;
