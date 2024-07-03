@@ -1,6 +1,7 @@
 import React from "react";
 import { PRODUCTS } from "../../Data/PRODUCTS";
 import Product from "../../Components/Product/Product";
+
 const Shop = () => {
   return (
     <React.Fragment>
