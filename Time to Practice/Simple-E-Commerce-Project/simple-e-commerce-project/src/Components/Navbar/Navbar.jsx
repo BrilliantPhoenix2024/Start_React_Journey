@@ -10,7 +10,7 @@ import { ShopContextCustom } from "../../context/shopContextCustom";
 
 const NavbarComponent = () => {
   const { cartItems } = useContext(ShopContextCustom);
-  const itemCount = cartItems.reduce((prevValue, currentValue) => {
+  const itemCount = cartItems?.reduce((prevValue, currentValue) => {
     return prevValue + currentValue.count;
   }, 0);
 
