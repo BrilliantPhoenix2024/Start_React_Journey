@@ -1,8 +1,18 @@
 // Custom Hook
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useCart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState();
+
+  useEffect(() => {
+    const data = localStorage.getItem("1");
+    setCartItems(!!JSON.parse(data) ? JSON.parse(data) : []);
+  }, []);
+
+  useEffect(() => {
+    if (cartItems !== undefined)
+      localStorage.setItem("1", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (itemId) => {
     if (!cartItems?.find((item) => item.id === itemId)) {
@@ -28,5 +38,11 @@ export const useCart = () => {
     );
   };
 
-  return { cartItems, addToCart, removeFromCart };
+  const resetCart = () => {
+    setCartItems();
+    localStorage.removeItem("1");
+    localStorage.clear();
+  };
+
+  return { cartItems, addToCart, removeFromCart, resetCart };
 };
