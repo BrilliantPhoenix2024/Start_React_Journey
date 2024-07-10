@@ -5,6 +5,7 @@ export const ShopContextCustom = createContext({
   cartItems: null,
   addToCart: () => {},
   removeFromCart: () => {},
+  resetCart: () => {},
 });
 
 export const ShopContextCustomProvider = (props) => {
