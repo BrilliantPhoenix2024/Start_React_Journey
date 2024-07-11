@@ -4,7 +4,7 @@ import { ShopContextCustom } from "../../context/shopContextCustom";
 import Product from "../../Components/Product/Product";
 
 const Cart = () => {
-  const { cartItems } = useContext(ShopContextCustom);
+  const { cartItems, resetCart } = useContext(ShopContextCustom);
   return (
     <React.Fragment>
       <h1>Your Cart Items</h1>
@@ -15,6 +15,7 @@ const Cart = () => {
           }
         })}
       </div>
+      <button className="btn btn-warning m-3" onClick={resetCart}>Reset Cart</button>
     </React.Fragment>
   );
 };
