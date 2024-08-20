@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { movies as initialMovies } from "../services/fakeMovieServices";
+import LikeComponent from "./common/LikeComponent";
 
 const Movies = () => {
   const [movies, setMovies] = useState(initialMovies);
@@ -29,6 +30,7 @@ const Movies = () => {
             <th>Stock</th>
             <th>Rate</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +40,9 @@ const Movies = () => {
               <td>{movie.genre.name}</td>
               <td>{movie.numberInStock}</td>
               <td>{movie.dailyRentalRate}</td>
+              <td>
+                <LikeComponent />
+              </td>
               <td>
                 <button
                   type="button"
