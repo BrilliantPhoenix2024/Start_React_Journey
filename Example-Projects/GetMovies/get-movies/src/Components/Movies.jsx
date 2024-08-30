@@ -1,23 +1,36 @@
 import React, { useState } from "react";
 import { movies as initialMovies } from "../services/fakeMovieServices";
 import LikeComponent from "./common/LikeComponent";
+import Pagination from "./common/Pagination";
+import { paginate } from "../utils/paginate"; // Import the paginate function
 
 const Movies = () => {
   const [movies, setMovies] = useState(initialMovies);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 4; // Number of items per page
+
+  const handleOnPageChange = (page) => {
+    setCurrentPage(page); // Update the current page
+  };
 
   const handleOnClick = (movieToDelete) => {
-    // Filter out the movie to delete
     const updatedMovies = movies.filter(
       (movie) => movie._id !== movieToDelete._id
     );
-    // Update state with the new movies array
     setMovies(updatedMovies);
+    // Reset current page if it exceeds the total pages after deletion
+    if (currentPage > Math.ceil(updatedMovies.length / pageSize)) {
+      setCurrentPage(Math.ceil(updatedMovies.length / pageSize));
+    }
   };
 
   const count = movies.length; // Use movies state to get the count
   if (count === 0) {
     return <p>There are no movies in the database.</p>;
   }
+
+  // Use the paginate function to get the movies for the current page
+  const paginatedMovies = paginate(movies, currentPage, pageSize);
 
   return (
     <React.Fragment>
@@ -34,7 +47,7 @@ const Movies = () => {
           </tr>
         </thead>
         <tbody>
-          {movies.map((movie) => (
+          {paginatedMovies.map((movie) => (
             <tr key={movie._id}>
               <td>{movie.title}</td>
               <td>{movie.genre.name}</td>
@@ -56,6 +69,12 @@ const Movies = () => {
           ))}
         </tbody>
       </table>
+      <Pagination
+        itemsCount={count} // Total number of movies
+        pageSize={pageSize}
+        onPageChange={handleOnPageChange}
+        currentPage={currentPage}
+      />
     </React.Fragment>
   );
 };
