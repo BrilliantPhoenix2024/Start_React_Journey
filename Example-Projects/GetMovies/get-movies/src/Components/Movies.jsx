@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import LikeComponent from "./common/LikeComponent";
 import Pagination from "./common/Pagination";
 import ListGroup from "./common/ListGroup";
 import { paginate } from "../utils/paginate"; // Import the paginate function
 import { getMovies } from "../services/fakeMovieServices";
 import { getGenres } from "../services/fakeGenreService";
+import MoviesTable from "./MoviesTable"; // Import the new MoviesTable component
 
 const Movies = () => {
   const [movies, setMovies] = useState(getMovies());
@@ -20,7 +20,7 @@ const Movies = () => {
 
   useEffect(() => {
     const genresData = getGenres();
-    setGenres([{ name: "All Genres" }, ...genresData]); // Add "All Genres" option
+    setGenres([{ _id: "", name: "All Genres" }, ...genresData]); // Add "All Genres" option
   }, []);
 
   const handleOnPageChange = (page) => {
@@ -63,40 +63,7 @@ const Movies = () => {
       </div>
       <div className="col">
         <p>There are {count} movies in the database</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Genre</th>
-              <th>Stock</th>
-              <th>Rate</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedMovies.map((movie) => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                <td>
-                  <LikeComponent />
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => handleOnClick(movie)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <MoviesTable movies={paginatedMovies} onDelete={handleOnClick} />
         <Pagination
           itemsCount={count} // Total number of filtered movies
           pageSize={pageSize}
