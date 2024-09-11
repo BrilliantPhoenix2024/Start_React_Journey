@@ -1,10 +1,31 @@
 // src/components/MovieTable.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LikeComponent from "./common/LikeComponent";
 
-const MovieTable = ({ movies, onDelete, onSort }) => {
+const MovieTable = ({ movies, onDelete }) => {
+  const [sortedMovies, setSortedMovies] = useState(movies);
+  const [sortColumn, setSortColumn] = useState("title");
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  useEffect(() => {
+    setSortedMovies(movies);
+  }, [movies]);
+
   const handleSort = (column) => {
-    onSort(column);
+    const order = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
+    setSortColumn(column);
+    setSortOrder(order);
+
+    const newSortedMovies = [...sortedMovies].sort((a, b) => {
+      let aValue = column === "genre" ? a.genre.name : a[column];
+      let bValue = column === "genre" ? b.genre.name : b[column];
+
+      if (aValue < bValue) return order === "asc" ? -1 : 1;
+      if (aValue > bValue) return order === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortedMovies(newSortedMovies);
   };
 
   return (
@@ -34,7 +55,7 @@ const MovieTable = ({ movies, onDelete, onSort }) => {
         </tr>
       </thead>
       <tbody>
-        {movies.map((movie) => (
+        {sortedMovies.map((movie) => (
           <tr key={movie._id}>
             <td>{movie.title}</td>
             <td>{movie.genre.name}</td>

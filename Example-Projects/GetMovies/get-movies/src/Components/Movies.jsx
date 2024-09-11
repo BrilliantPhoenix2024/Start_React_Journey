@@ -13,8 +13,6 @@ const Movies = () => {
   const pageSize = 4; // Number of items per page
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [genres, setGenres] = useState([]);
-  const [sortColumn, setSortColumn] = useState("title");
-  const [sortOrder, setSortOrder] = useState("asc");
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
@@ -39,23 +37,6 @@ const Movies = () => {
     if (currentPage > Math.ceil(updatedMovies.length / pageSize)) {
       setCurrentPage(Math.ceil(updatedMovies.length / pageSize));
     }
-  };
-
-  const handleOnSort = (column) => {
-    const order = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
-    setSortColumn(column);
-    setSortOrder(order);
-
-    const sortedMovies = [...movies].sort((a, b) => {
-      let aValue = column === "genre" ? a.genre.name : a[column];
-      let bValue = column === "genre" ? b.genre.name : b[column];
-
-      if (aValue < bValue) return order === "asc" ? -1 : 1;
-      if (aValue > bValue) return order === "asc" ? 1 : -1;
-      return 0;
-    });
-
-    setMovies(sortedMovies);
   };
 
   // Filter movies based on selected genre
@@ -83,11 +64,7 @@ const Movies = () => {
       </div>
       <div className="col">
         <p>There are {count} movies in the database</p>
-        <MoviesTable
-          movies={paginatedMovies}
-          onDelete={handleOnClick}
-          onSort={handleOnSort}
-        />
+        <MoviesTable movies={paginatedMovies} onDelete={handleOnClick} />
         <Pagination
           itemsCount={count} // Total number of filtered movies
           pageSize={pageSize}
