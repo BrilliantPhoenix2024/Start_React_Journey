@@ -1,6 +1,7 @@
 // src/components/MovieTable.jsx
 import React, { useState, useEffect } from "react";
 import LikeComponent from "./common/LikeComponent";
+import TableHeader from "./common/TableHeader"; // Import the new TableHeader component
 
 const MovieTable = ({ movies, onDelete }) => {
   const [sortedMovies, setSortedMovies] = useState(movies);
@@ -30,30 +31,11 @@ const MovieTable = ({ movies, onDelete }) => {
 
   return (
     <table className="table">
-      <thead>
-        <tr>
-          <th style={{ cursor: "pointer" }} onClick={() => handleSort("title")}>
-            Title
-          </th>
-          <th style={{ cursor: "pointer" }} onClick={() => handleSort("genre")}>
-            Genre
-          </th>
-          <th
-            style={{ cursor: "pointer" }}
-            onClick={() => handleSort("numberInStock")}
-          >
-            Stock
-          </th>
-          <th
-            style={{ cursor: "pointer" }}
-            onClick={() => handleSort("dailyRentalRate")}
-          >
-            Rate
-          </th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
+      <TableHeader
+        onSort={handleSort}
+        sortColumn={sortColumn}
+        sortOrder={sortOrder}
+      />
       <tbody>
         {sortedMovies.map((movie) => (
           <tr key={movie._id}>
