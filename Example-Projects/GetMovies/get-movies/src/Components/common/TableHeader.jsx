@@ -1,31 +1,36 @@
-// src/components/TableHeader.jsx
 import React from "react";
+import PropTypes from "prop-types";
 
-const TableHeader = ({ onSort, sortColumn, sortOrder }) => {
-  const columns = [
-    { column: "title", label: "Title" },
-    { column: "genre", label: "Genre" },
-    { column: "numberInStock", label: "Stock" },
-    { column: "dailyRentalRate", label: "Rate" },
-  ];
-
+const TableHeader = ({ columns, onSort, sortColumn, sortOrder }) => {
   return (
     <thead>
       <tr>
         {columns.map((column) => (
           <th
-            key={column.column}
+            key={column.path || column.key}
             style={{ cursor: "pointer" }}
-            onClick={() => onSort(column.column)}
+            onClick={() => onSort(column.path)}
           >
             {column.label}
-            {sortColumn === column.column &&
-              (sortOrder === "asc" ? " ↑" : " ↓")}
+            {sortColumn === column.path && (sortOrder === "asc" ? " ↑" : " ↓")}
           </th>
         ))}
       </tr>
     </thead>
   );
+};
+
+// PropTypes for type checking
+TableHeader.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onSort: PropTypes.func.isRequired,
+  sortColumn: PropTypes.string.isRequired,
+  sortOrder: PropTypes.oneOf(["asc", "desc"]).isRequired,
 };
 
 export default TableHeader;
