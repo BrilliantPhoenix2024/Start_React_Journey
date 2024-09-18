@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LikeComponent = (props) => {
+const LikeComponent = () => {
   // Initialize the state to track whether the item is liked
   const [liked, setLiked] = useState(false);
 
