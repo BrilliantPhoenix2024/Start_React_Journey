@@ -8,12 +8,16 @@ const TableBody = ({ data, onDelete, columns }) => {
     return _.get(item, column.path);
   };
 
+  const createKey = (column) => {
+    return column.path || column.key;
+  };
+
   return (
     <tbody>
       {data.map((item) => (
         <tr key={item._id}>
           {columns.map((column) => (
-            <td key={column.path || column.key}>{renderCell(item, column)}</td>
+            <td key={createKey(column)}>{renderCell(item, column)}</td>
           ))}
         </tr>
       ))}
