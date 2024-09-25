@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash"; // Import lodash
 
-const TableBody = ({ data, onDelete, columns }) => {
+const TableBody = ({ data, columns }) => {
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
 
