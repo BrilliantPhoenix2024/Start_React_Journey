@@ -1,8 +1,6 @@
-// src/components/MovieTable.jsx
 import React, { useState, useEffect } from "react";
-import TableHeader from "./common/TableHeader"; // Import the TableHeader component
-import TableBody from "./common/TableBody"; // Import the new TableBody component
 import LikeComponent from "./common/LikeComponent";
+import TableComponent from "./common/TableComponent";
 
 const MovieTable = ({ movies, onDelete }) => {
   const [sortedMovies, setSortedMovies] = useState(movies);
@@ -19,8 +17,8 @@ const MovieTable = ({ movies, onDelete }) => {
     setSortOrder(order);
 
     const newSortedMovies = [...sortedMovies].sort((a, b) => {
-      let aValue = column === "genre" ? a.genre.name : a[column];
-      let bValue = column === "genre" ? b.genre.name : b[column];
+      let aValue = column === "genre.name" ? a.genre.name : a[column];
+      let bValue = column === "genre.name" ? b.genre.name : b[column];
 
       if (aValue < bValue) return order === "asc" ? -1 : 1;
       if (aValue > bValue) return order === "asc" ? 1 : -1;
@@ -54,15 +52,13 @@ const MovieTable = ({ movies, onDelete }) => {
   ];
 
   return (
-    <table className="table">
-      <TableHeader
-        columns={columns}
-        onSort={handleSort}
-        sortColumn={sortColumn}
-        sortOrder={sortOrder}
-      />
-      <TableBody data={sortedMovies} onDelete={onDelete} columns={columns} />
-    </table>
+    <TableComponent
+      columns={columns}
+      data={sortedMovies} // Use sortedMovies instead of movies
+      sortColumn={sortColumn}
+      sortOrder={sortOrder} // Pass sortOrder if needed
+      onSort={handleSort} // Pass handleSort instead of onSort
+    />
   );
 };
 
