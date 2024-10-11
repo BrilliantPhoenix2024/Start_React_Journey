@@ -2,14 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const LinkPage = () => {
+  const links = [
+    { id: 1, name: "Link 1" },
+    { id: 2, name: "Link 2" },
+    { id: 3, name: "Link 3" },
+  ];
+
   return (
-    <div>
+    <React.Fragment>
       <ul>
-        <li><Link>Link 1 </Link></li>
-        <li><Link>Link 2 </Link></li>
-        <li><Link>Link 3 </Link></li>
+        {links.map((link) => (
+          <li key={link.id}>
+            <Link to={`/link/${link.id}`}>{link.name}</Link>
+          </li>
+        ))}
       </ul>
-    </div>
+    </React.Fragment>
   );
 };
 
