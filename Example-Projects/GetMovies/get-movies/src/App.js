@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import LinkPage from "./pages/LinkPage";
 import Movies from "./Components/Movies";
 import LinkDetail from "./pages/LinkDetail"; // Import the dynamic detail component
+import Posts from "./pages/Posts.jsx";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/link" element={<LinkPage />} />
         {/* Dynamic Route for Link Details */}
         <Route path="/link/:id" element={<LinkDetail />} />
+        <Route path="/posts/:year?/:month?" element={<Posts />} />
       </Routes>
     </Router>
   );
