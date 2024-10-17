@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import NavbarComponent from "./Components/NavbarComponent.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact";
@@ -20,6 +25,7 @@ const App = () => {
         {/* Dynamic Route for Link Details */}
         <Route path="/link/:id" element={<LinkDetail />} />
         <Route path="/posts/:year?/:month?" element={<Posts />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
   );
