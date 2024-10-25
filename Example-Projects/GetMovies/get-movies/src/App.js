@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/link" element={<LinkPage />} />
         {/* Dynamic Route for Link Details */}
         <Route path="/link/:id" element={<LinkDetail />} />
-        <Route path="/posts/:year?/:month?" element={<Posts />} />
+        <Route path="/posts/*" element={<Posts />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
