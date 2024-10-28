@@ -1,17 +1,11 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavbarComponent from "./Components/NavbarComponent.jsx";
-import About from "./pages/About.jsx";
-import Contact from "./pages/Contact";
-import LinkPage from "./pages/LinkPage";
+
 import Movies from "./Components/Movies";
-import LinkDetail from "./pages/LinkDetail"; // Import the dynamic detail component
-import Posts from "./pages/Posts.jsx";
+import Customers from "./Components/Customerss.jsx";
+import Rentals from "./Components/Rentals";
+import MovieForm from "./Components/MovieForm";
 
 const App = () => {
   return (
@@ -19,12 +13,11 @@ const App = () => {
       <NavbarComponent />
       <Routes>
         <Route path="/" element={<Movies />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/link" element={<LinkPage />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/customers" element={<Customers />} />
         {/* Dynamic Route for Link Details */}
-        <Route path="/link/:id" element={<LinkDetail />} />
-        <Route path="/posts/*" element={<Posts />} />
+        <Route path="/movies/:id" element={<MovieForm />} />
+        <Route path="/rentals" element={<Rentals />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
