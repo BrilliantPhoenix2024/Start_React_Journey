@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LikeComponent from "./common/LikeComponent";
 import TableComponent from "./common/TableComponent";
+import { Link } from "react-router-dom";
 
 const MovieTable = ({ movies, onDelete }) => {
   const [sortedMovies, setSortedMovies] = useState(movies);
@@ -29,7 +30,13 @@ const MovieTable = ({ movies, onDelete }) => {
   };
 
   const columns = [
-    { path: "title", label: "Title" },
+    {
+      path: "title",
+      label: "Title",
+      content: (movie) => (
+        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      ),
+    },
     { path: "genre.name", label: "Genre" },
     { path: "numberInStock", label: "Stock" },
     { path: "dailyRentalRate", label: "Rate" },
