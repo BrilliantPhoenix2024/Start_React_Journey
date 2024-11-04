@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavbarComponent from "./Components/NavbarComponent.jsx";
-
 import Movies from "./Components/Movies";
-import Customers from "./Components/Customerss.jsx";
+import Customers from "./Components/Customers.jsx";
 import Rentals from "./Components/Rentals";
 import MovieForm from "./Components/MovieForm";
+import LoginForm from "./Components/LoginForm";
 
 const App = () => {
   return (
@@ -18,6 +18,7 @@ const App = () => {
         {/* Dynamic Route for Link Details */}
         <Route path="/movies/:id" element={<MovieForm />} />
         <Route path="/rentals" element={<Rentals />} />
+        <Route path="/login" element={<LoginForm />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
