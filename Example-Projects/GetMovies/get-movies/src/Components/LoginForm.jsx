@@ -11,9 +11,13 @@ const LoginForm = () => {
       ...prevAccount,
       [name]: value, // Dynamically update the property based on input name
     }));
+
+    // Validate on change
+    const validationErrors = validate({ ...account, [name]: value });
+    setErrors(validationErrors);
   };
 
-  const validate = () => {
+  const validate = (account) => {
     const errors = {};
     if (!account.username) errors.username = "Username is required.";
     if (!account.password) errors.password = "Password is required.";
@@ -22,7 +26,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validate(account);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) return; // Stop submission if there are errors
