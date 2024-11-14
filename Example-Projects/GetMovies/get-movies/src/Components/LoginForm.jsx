@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import Input from "./common/Input";
+import Joi from "joi-browser"; // Import Joi
+import Input from "./common/Input"; // Assuming you have an Input component
 
 const LoginForm = () => {
   const [account, setAccount] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({});
+
+  // Define the schema using Joi.object()
+  const schema = Joi.object({
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password"),
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,22 +21,25 @@ const LoginForm = () => {
 
     // Validate on change
     const validationErrors = validate({ ...account, [name]: value });
-    setErrors(validationErrors);
+    setErrors(validationErrors || {});
   };
 
   const validate = (account) => {
+    const options = { abortEarly: false };
+    const { error } = schema.validate(account, options); // Using new validation method
+    if (!error) return null;
+
     const errors = {};
-    if (!account.username) errors.username = "Username is required.";
-    if (!account.password) errors.password = "Password is required.";
+    for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate(account);
-    setErrors(validationErrors);
+    setErrors(validationErrors || {}); // Ensure errors is an object
 
-    if (Object.keys(validationErrors).length > 0) return; // Stop submission if there are errors
+    if (validationErrors && Object.keys(validationErrors).length > 0) return; // Stop submission if there are errors
 
     // If no errors, proceed with submission logic
     console.log("Submitted");
