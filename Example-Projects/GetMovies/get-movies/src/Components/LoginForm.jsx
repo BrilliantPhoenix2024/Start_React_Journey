@@ -12,6 +12,19 @@ const LoginForm = () => {
     password: Joi.string().required().label("Password"),
   });
 
+  const validateProperty = (name, value) => {
+    let tempSchema;
+
+    if (name === "username") {
+      tempSchema = Joi.string().required().label("Username");
+    } else if (name === "password") {
+      tempSchema = Joi.string().required().label("Password");
+    }
+
+    const { error } = tempSchema.validate(value); // Validate the single property
+    return error ? error.details[0].message : null; // Return the error message or null
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAccount((prevAccount) => ({
@@ -19,14 +32,17 @@ const LoginForm = () => {
       [name]: value, // Dynamically update the property based on input name
     }));
 
-    // Validate on change
-    const validationErrors = validate({ ...account, [name]: value });
-    setErrors(validationErrors || {});
+    // Validate the specific field
+    const errorMessage = validateProperty(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMessage, // Update the errors state
+    }));
   };
 
   const validate = (account) => {
     const options = { abortEarly: false };
-    const { error } = schema.validate(account, options); // Using new validation method
+    const { error } = schema.validate(account, options);
     if (!error) return null;
 
     const errors = {};
