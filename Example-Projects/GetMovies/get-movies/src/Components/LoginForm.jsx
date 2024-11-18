@@ -63,6 +63,9 @@ const LoginForm = () => {
     console.log("Password:", account.password);
   };
 
+  // Check if the form is valid by checking for errors
+  const isValid = Object.keys(errors).length === 0;
+
   return (
     <div className="w-75 m-auto">
       <h1>Login</h1>
@@ -85,7 +88,7 @@ const LoginForm = () => {
           error={errors.password} // Pass error message to Input component
         />
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={isValid}>
           Login
         </button>
       </form>
