@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import Joi from "joi-browser"; // Correct import of Joi
+import Input from "./Input";
 
 class Form extends Component {
   state = {
-    data: {},
+    data: {
+      username: "", // Initialize with empty string
+      password: "", // Initialize with empty string
+    },
     errors: {},
   };
 
@@ -50,6 +54,32 @@ class Form extends Component {
       errors: { ...this.state.errors, [name]: errorMessage }, // Update errors state
     });
   };
+
+  renderButton(label) {
+    return (
+      <button
+        type="submit"
+        className="btn btn-primary"
+        disabled={this.validate()}
+      >
+        {label}
+      </button>
+    );
+  }
+
+  renderInput(name, label, type = "text") {
+    const { data, errors } = this.state; // Destructure state for easier access
+    return (
+      <Input
+        label={label}
+        type={type}
+        name={name}
+        value={data[name]} // This will now be defined
+        onChange={this.handleChange}
+        error={errors[name]} // Pass error message to Input component
+      />
+    );
+  }
 }
 
 export default Form;
