@@ -6,6 +6,7 @@ import Customers from "./Components/Customers.jsx";
 import Rentals from "./Components/Rentals";
 import MovieForm from "./Components/MovieForm";
 import LoginForm from "./Components/LoginForm";
+import RegisterForm from "./Components/RegisterForm.jsx";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/movies/:id" element={<MovieForm />} />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>
