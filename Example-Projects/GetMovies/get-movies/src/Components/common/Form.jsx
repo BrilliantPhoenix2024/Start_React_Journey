@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import Joi from "joi-browser"; // Correct import of Joi
+import Joi from "joi-browser";
 import Input from "./Input";
 
 class Form extends Component {
   state = {
     data: {
-      username: "", // Initialize with empty string
+      // username: "",
+      email: "", // Initialize with empty string
       password: "", // Initialize with empty string
+      name: "",
     },
     errors: {},
   };
@@ -14,11 +16,16 @@ class Form extends Component {
   validateProperty = (name, value) => {
     let tempSchema;
 
-    if (name === "username") {
-      tempSchema = Joi.string().required().label("Username");
+    if (name === "email") {
+      tempSchema = Joi.string().required().label("Email");
     } else if (name === "password") {
       tempSchema = Joi.string().required().label("Password");
+    } else if (name === "name") {
+      tempSchema = Joi.string().required().label("Name");
     }
+    // else if (name === "username") {
+    //   tempSchema = Joi.string().required().label("Username");
+    // }
 
     const { error } = tempSchema.validate(value); // Validate the single property
     return error ? error.details[0].message : null; // Return the error message or null
@@ -80,6 +87,26 @@ class Form extends Component {
       />
     );
   }
+
+  // renderInput(name, label, type = "text") {
+  //   const { data, errors } = this.state;
+  //   return (
+  //     <div className="form-group">
+  //       <label htmlFor={name}>{label}</label>
+  //       <input
+  //         type={type}
+  //         name={name}
+  //         id={name}
+  //         value={data[name]} // Controlled input
+  //         onChange={this.handleChange} // Handle changes
+  //         className="form-control"
+  //       />
+  //       {errors[name] && (
+  //         <div className="alert alert-danger">{errors[name]}</div>
+  //       )}
+  //     </div>
+  //   );
+  // }
 }
 
 export default Form;
