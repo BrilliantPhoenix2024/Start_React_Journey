@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/movies" element={<Movies />} />
         <Route path="/customers" element={<Customers />} />
         {/* Dynamic Route for Link Details */}
+        <Route path="/movies/new" element={<MovieForm />} />
         <Route path="/movies/:id" element={<MovieForm />} />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/login" element={<LoginForm />} />
