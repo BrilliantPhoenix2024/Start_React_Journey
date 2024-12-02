@@ -6,6 +6,7 @@ import { getMovies } from "../services/fakeMovieServices";
 import { getGenres } from "../services/fakeGenreService";
 import MoviesTable from "./MoviesTable"; // Import the new MoviesTable component
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 const Movies = () => {
   const [movies, setMovies] = useState(getMovies());
@@ -63,6 +64,10 @@ const Movies = () => {
         />
       </div>
       <div className="col">
+        <Link to="/movies/new" className="btn btn-primary mb-2">
+          New Movie
+        </Link>
+
         <p>There are {count} movies in the database</p>
         <MoviesTable movies={paginatedMovies} onDelete={handleOnClick} />
         <Pagination
