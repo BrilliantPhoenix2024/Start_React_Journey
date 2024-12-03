@@ -1,38 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
-import Input from "./Input";
 
-class Form extends Component {
+class Form extends React.Component {
   state = {
-    data: {
-      // username: "",
-      email: "", // Initialize with empty string
-      password: "", // Initialize with empty string
-      name: "",
-    },
+    data: {},
     errors: {},
   };
 
-  validateProperty = (name, value) => {
-    let tempSchema;
-
-    if (name === "email") {
-      tempSchema = Joi.string().required().label("Email");
-    } else if (name === "password") {
-      tempSchema = Joi.string().required().label("Password");
-    } else if (name === "name") {
-      tempSchema = Joi.string().required().label("Name");
-    }
-    // else if (name === "username") {
-    //   tempSchema = Joi.string().required().label("Username");
-    // }
-
-    const { error } = tempSchema.validate(value); // Validate the single property
-    return error ? error.details[0].message : null; // Return the error message or null
-  };
-
   validate = () => {
-    const options = { abortEarly: false };
+    const options = { abortEarly: false }; // Return all errors
     const { error } = this.schema.validate(this.state.data, options);
     if (!error) return null;
 
@@ -41,72 +17,73 @@ class Form extends Component {
     return errors;
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = this.validate();
-    this.setState({ errors: validationErrors || {} });
+  handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+    const errors = this.validate();
+    this.setState({ errors: errors || {} }); // Set errors if any
+    if (errors) return; // If there are errors, exit
 
-    if (validationErrors) return; // Stop submission if there are errors
-
-    this.doSubmit(); // Call the doSubmit method defined in child
+    this.doSubmit(); // Call doSubmit if no errors
   };
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    const data = { ...this.state.data, [name]: value }; // Update data state
+  renderInput(name, label, type = "text") {
+    const { data, errors } = this.state;
+    return (
+      <div className="form-group">
+        <label htmlFor={name}>{label}</label>
+        <input
+          value={data[name]}
+          onChange={this.handleChange}
+          id={name}
+          name={name}
+          type={type}
+          className="form-control"
+        />
+        {errors[name] && (
+          <div className="alert alert-danger">{errors[name]}</div>
+        )}
+      </div>
+    );
+  }
 
-    const errorMessage = this.validateProperty(name, value);
-    this.setState({
-      data,
-      errors: { ...this.state.errors, [name]: errorMessage }, // Update errors state
-    });
+  renderSelect(name, label, options) {
+    const { data, errors } = this.state;
+    return (
+      <div className="form-group">
+        <label htmlFor={name}>{label}</label>
+        <select
+          id={name}
+          name={name}
+          value={data[name]}
+          onChange={this.handleChange}
+          className="form-control"
+        >
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors[name] && (
+          <div className="alert alert-danger">{errors[name]}</div>
+        )}
+      </div>
+    );
+  }
+
+  handleChange = ({ currentTarget: input }) => {
+    const data = { ...this.state.data };
+    data[input.name] = input.value;
+    this.setState({ data });
   };
 
   renderButton(label) {
     return (
-      <button
-        type="submit"
-        className="btn btn-primary"
-        disabled={this.validate()}
-      >
+      <button disabled={this.validate()} className="btn btn-primary">
         {label}
       </button>
     );
   }
-
-  renderInput(name, label, type = "text") {
-    const { data, errors } = this.state; // Destructure state for easier access
-    return (
-      <Input
-        label={label}
-        type={type}
-        name={name}
-        value={data[name]} // This will now be defined
-        onChange={this.handleChange}
-        error={errors[name]} // Pass error message to Input component
-      />
-    );
-  }
-
-  // renderInput(name, label, type = "text") {
-  //   const { data, errors } = this.state;
-  //   return (
-  //     <div className="form-group">
-  //       <label htmlFor={name}>{label}</label>
-  //       <input
-  //         type={type}
-  //         name={name}
-  //         id={name}
-  //         value={data[name]} // Controlled input
-  //         onChange={this.handleChange} // Handle changes
-  //         className="form-control"
-  //       />
-  //       {errors[name] && (
-  //         <div className="alert alert-danger">{errors[name]}</div>
-  //       )}
-  //     </div>
-  //   );
-  // }
 }
 
 export default Form;
