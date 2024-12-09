@@ -5,6 +5,7 @@ import { paginate } from "../utils/paginate"; // Import the paginate function
 import { getMovies } from "../services/fakeMovieServices";
 import { getGenres } from "../services/fakeGenreService";
 import MoviesTable from "./MoviesTable"; // Import the new MoviesTable component
+import SearchBox from "./common/SearchBox";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 
@@ -14,10 +15,19 @@ const Movies = () => {
   const pageSize = 4; // Number of items per page
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [genres, setGenres] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [sortColumn, setSortColumn] = useState({ path: "title", order: "asc" }); // Define sortColumn
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
+    setSearchQuery("");
     setCurrentPage(1); // Reset to the first page when a new genre is selected
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    setSelectedGenre(null);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -40,13 +50,25 @@ const Movies = () => {
     }
   };
 
-  // Filter movies based on selected genre
-  const filteredMovies =
-    selectedGenre && selectedGenre._id
-      ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
-      : movies; // If no genre is selected, show all movies
+  // Filter movies based on selected genre and search query
+  let filteredMovies = movies;
+  if (searchQuery)
+    filteredMovies = movies.filter((m) =>
+      m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+    );
+  else if (selectedGenre && selectedGenre._id)
+    filteredMovies = movies.filter(
+      (movie) => movie.genre._id === selectedGenre._id
+    );
 
-  const count = filteredMovies.length; // Use filtered movies for count
+  // Sort movies
+  const sorted = _.orderBy(
+    filteredMovies,
+    [sortColumn.path],
+    [sortColumn.order]
+  );
+
+  const count = sorted.length; // Use sorted movies for count
   if (count === 0) {
     return <p>There are no movies in the database.</p>;
   }
@@ -69,6 +91,7 @@ const Movies = () => {
         </Link>
 
         <p>There are {count} movies in the database</p>
+        <SearchBox value={searchQuery} onChange={handleSearch} />
         <MoviesTable movies={paginatedMovies} onDelete={handleOnClick} />
         <Pagination
           itemsCount={count} // Total number of filtered movies
