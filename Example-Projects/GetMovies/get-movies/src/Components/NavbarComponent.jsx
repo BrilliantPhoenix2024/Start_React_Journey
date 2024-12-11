@@ -18,6 +18,9 @@ const NavbarComponent = () => {
             <Nav.Link as={Link} to="/customers">
               Customers
             </Nav.Link>
+            <Nav.Link as={Link} to="/posts">
+              Posts
+            </Nav.Link>
             <Nav.Link as={Link} to="/rentals">
               Rentals
             </Nav.Link>
