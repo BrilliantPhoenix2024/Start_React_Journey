@@ -21,19 +21,19 @@ const PostsComponent = () => {
     }
   };
 
- const handleAdd = async () => {
-   const newItem = {
-     title: "New Post",
-     body: "This is a new post",
-     userId: 1,
-   };
-   try {
-     const response = await axios.post(API_URL, newItem);
-     setData([response.data, ...data]);
-   } catch (error) {
-     console.error("Error adding item:", error);
-   }
- };
+  const handleAdd = async () => {
+    const newItem = {
+      title: "New Post",
+      body: "This is a new post",
+      userId: 1,
+    };
+    try {
+      const response = await axios.post(API_URL, newItem);
+      setData([response.data, ...data]);
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
+  };
 
   const sortData = () => {
     const sorted = [...data].sort((a, b) => {
@@ -47,35 +47,38 @@ const PostsComponent = () => {
     setSortAsc(!sortAsc);
   };
 
-const handleUpdate = async (item) => {
-  console.log(`Update item with ID: ${item.id}`);
+  const handleUpdate = async (item) => {
+    console.log(`Update item with ID: ${item.id}`);
 
-  // Clone and modify the item
-  const updatedItem = { ...item, title: "Updated" };
+    // Clone and modify the item
+    const updatedItem = { ...item, title: "Updated" };
 
-  try {
-    const response = await axios.put(`${API_URL}/${item.id}`, updatedItem);
-    const updatedData = response.data;
+    try {
+      const response = await axios.put(`${API_URL}/${item.id}`, updatedItem);
+      const updatedData = response.data;
 
-    // Update local state
-    const items = [...data];
-    const index = items.findIndex((i) => i.id === item.id);
-    if (index !== -1) {
-      items[index] = updatedData;
-      setData(items);
+      // Update local state
+      const items = [...data];
+      const index = items.findIndex((i) => i.id === item.id);
+      if (index !== -1) {
+        items[index] = updatedData;
+        setData(items);
+      }
+    } catch (error) {
+      console.error("Error updating item:", error);
     }
-  } catch (error) {
-    console.error("Error updating item:", error);
-  }
-};
-
+  };
 
   const handleDelete = async (id) => {
+    const originalItems = data;
+
+    setData(data.filter((item) => item.id !== id));
     try {
       await axios.delete(`${API_URL}/${id}`);
-      setData(data.filter((item) => item.id !== id));
     } catch (error) {
+      alert("Something went wrong!");
       console.error("Error deleting item:", error);
+      setData(originalItems);
     }
   };
 
