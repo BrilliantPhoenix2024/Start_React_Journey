@@ -72,13 +72,44 @@ const PostsComponent = () => {
   const handleDelete = async (id) => {
     const originalItems = data;
 
+    // Optimistically remove item from UI
     setData(data.filter((item) => item.id !== id));
+
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      const response = await axios.delete(`${API_URL}/${id}`);
+
+      // Optional: check for successful status
+      if (response.status !== 200 && response.status !== 204) {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
     } catch (error) {
-      alert("Something went wrong!");
-      console.error("Error deleting item:", error);
+      // Restore original data
       setData(originalItems);
+
+      // Expected error: server responded with a known issue
+      if (error.response) {
+        const status = error.response.status;
+
+        if (status === 404) {
+          alert("Item not found. It may have already been deleted.");
+        } else if (status === 403) {
+          alert("You don't have permission to delete this item.");
+        } else {
+          alert(`Server error: ${status}`);
+        }
+
+        console.error("Expected error:", error.response.data);
+
+        // Unexpected error: no response from server
+      } else if (error.request) {
+        alert("Network error. Please check your connection.");
+        console.error("Unexpected error: No response received", error.request);
+
+        // Something else went wrong
+      } else {
+        alert("An unexpected error occurred.");
+        console.error("Unexpected error:", error.message);
+      }
     }
   };
 
