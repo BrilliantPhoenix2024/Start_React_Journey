@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import axiosClient from "../utils/axiosClient";
 
 const PostsComponent = () => {
   const [data, setData] = useState([]);
@@ -69,49 +70,24 @@ const PostsComponent = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    const originalItems = data;
+const handleDelete = async (id) => {
+  const originalItems = data;
 
-    // Optimistically remove item from UI
-    setData(data.filter((item) => item.id !== id));
+  // Optimistically update UI
+  setData(data.filter((item) => item.id !== id));
 
-    try {
-      const response = await axios.delete(`${API_URL}/${id}`);
+  try {
+    const response = await axiosClient.delete(`/posts/${id}`);
 
-      // Optional: check for successful status
-      if (response.status !== 200 && response.status !== 204) {
-        throw new Error(`Unexpected response status: ${response.status}`);
-      }
-    } catch (error) {
-      // Restore original data
-      setData(originalItems);
-
-      // Expected error: server responded with a known issue
-      if (error.response) {
-        const status = error.response.status;
-
-        if (status === 404) {
-          alert("Item not found. It may have already been deleted.");
-        } else if (status === 403) {
-          alert("You don't have permission to delete this item.");
-        } else {
-          alert(`Server error: ${status}`);
-        }
-
-        console.error("Expected error:", error.response.data);
-
-        // Unexpected error: no response from server
-      } else if (error.request) {
-        alert("Network error. Please check your connection.");
-        console.error("Unexpected error: No response received", error.request);
-
-        // Something else went wrong
-      } else {
-        alert("An unexpected error occurred.");
-        console.error("Unexpected error:", error.message);
-      }
+    if (response.status !== 200 && response.status !== 204) {
+      throw new Error(`Unexpected response status: ${response.status}`);
     }
-  };
+  } catch (error) {
+    // Restore original data on failure
+    setData(originalItems);
+    // Error messages already handled by interceptor
+  }
+};
 
   return (
     <div>
