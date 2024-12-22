@@ -15,7 +15,7 @@ const PostsComponent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axiosClient.get(API_URL);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -29,7 +29,7 @@ const PostsComponent = () => {
       userId: 1,
     };
     try {
-      const response = await axios.post(API_URL, newItem);
+      const response = await axiosClient.post(API_URL, newItem);
       setData([response.data, ...data]);
     } catch (error) {
       console.error("Error adding item:", error);
@@ -55,7 +55,10 @@ const PostsComponent = () => {
     const updatedItem = { ...item, title: "Updated" };
 
     try {
-      const response = await axios.put(`${API_URL}/${item.id}`, updatedItem);
+      const response = await axiosClient.put(
+        `${API_URL}/${item.id}`,
+        updatedItem
+      );
       const updatedData = response.data;
 
       // Update local state

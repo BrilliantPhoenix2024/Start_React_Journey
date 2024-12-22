@@ -33,4 +33,10 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export default axiosClient;
+export default {
+  get: axiosClient.get,
+  post: axiosClient.post,
+  put: axiosClient.put,
+  delete: axiosClient.delete,
+};
+
