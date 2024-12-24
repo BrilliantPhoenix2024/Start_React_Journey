@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import axiosClient from "../utils/axiosClient";
+import config from "../config.json";
 
 const PostsComponent = () => {
   const [data, setData] = useState([]);
   const [sortAsc, setSortAsc] = useState(true);
-
-  // API endpoint
-  const API_URL = "http://jsonplaceholder.typicode.com/posts";
 
   useEffect(() => {
     fetchData();
@@ -15,7 +13,7 @@ const PostsComponent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axiosClient.get(API_URL);
+      const response = await axiosClient.get(config.apiEndpoint);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -29,7 +27,7 @@ const PostsComponent = () => {
       userId: 1,
     };
     try {
-      const response = await axiosClient.post(API_URL, newItem);
+      const response = await axiosClient.post(config.apiEndpoint, newItem);
       setData([response.data, ...data]);
     } catch (error) {
       console.error("Error adding item:", error);
@@ -56,7 +54,7 @@ const PostsComponent = () => {
 
     try {
       const response = await axiosClient.put(
-        `${API_URL}/${item.id}`,
+        `${config.apiEndpoint}/${item.id}`,
         updatedItem
       );
       const updatedData = response.data;
@@ -73,24 +71,24 @@ const PostsComponent = () => {
     }
   };
 
-const handleDelete = async (id) => {
-  const originalItems = data;
+  const handleDelete = async (id) => {
+    const originalItems = data;
 
-  // Optimistically update UI
-  setData(data.filter((item) => item.id !== id));
+    // Optimistically update UI
+    setData(data.filter((item) => item.id !== id));
 
-  try {
-    const response = await axiosClient.delete(`/posts/${id}`);
+    try {
+      const response = await axiosClient.delete(`/posts/${id}`);
 
-    if (response.status !== 200 && response.status !== 204) {
-      throw new Error(`Unexpected response status: ${response.status}`);
+      if (response.status !== 200 && response.status !== 204) {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      // Restore original data on failure
+      setData(originalItems);
+      // Error messages already handled by interceptor
     }
-  } catch (error) {
-    // Restore original data on failure
-    setData(originalItems);
-    // Error messages already handled by interceptor
-  }
-};
+  };
 
   return (
     <div>
