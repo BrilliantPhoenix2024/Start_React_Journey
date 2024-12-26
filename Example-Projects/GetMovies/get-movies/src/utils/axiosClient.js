@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const axiosClient = axios.create({
   baseURL: "http://jsonplaceholder.typicode.com",
@@ -13,19 +14,19 @@ axiosClient.interceptors.response.use(
       const status = error.response.status;
 
       if (status === 404) {
-        alert("Item not found. It may have already been deleted.");
+        toast("Item not found. It may have already been deleted.");
       } else if (status === 403) {
-        alert("You don't have permission to perform this action.");
+        toast("You don't have permission to perform this action.");
       } else {
-        alert(`Server error: ${status}`);
+        toast(`Server error: ${status}`);
       }
 
       console.error("Expected error:", error.response.data);
     } else if (error.request) {
-      alert("Network error. Please check your connection.");
+      toast("Network error. Please check your connection.");
       console.error("Unexpected error: No response received", error.request);
     } else {
-      alert("An unexpected error occurred.");
+      toast("An unexpected error occurred.");
       console.error("Unexpected error:", error.message);
     }
 
@@ -39,4 +40,3 @@ export default {
   put: axiosClient.put,
   delete: axiosClient.delete,
 };
-

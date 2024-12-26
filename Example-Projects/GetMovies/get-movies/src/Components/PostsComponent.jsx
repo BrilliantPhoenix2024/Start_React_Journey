@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { ToastContainer } from "react-toastify";
 import axiosClient from "../utils/axiosClient";
 import config from "../config.json";
+import "react-toastify/dist/ReactToastify.css";
 
 const PostsComponent = () => {
   const [data, setData] = useState([]);
@@ -92,6 +93,7 @@ const PostsComponent = () => {
 
   return (
     <div>
+      <ToastContainer />
       <h2>Posts Table</h2>
       <button className="btn btn-info " onClick={handleAdd}>
         Add
