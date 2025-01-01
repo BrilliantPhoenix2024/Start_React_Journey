@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import Raven from "raven-js";
 
 const axiosClient = axios.create({
   baseURL: "http://jsonplaceholder.typicode.com",
@@ -21,13 +22,13 @@ axiosClient.interceptors.response.use(
         toast(`Server error: ${status}`);
       }
 
-      console.error("Expected error:", error.response.data);
+      Raven.captureException(error.response.data);
     } else if (error.request) {
       toast("Network error. Please check your connection.");
-      console.error("Unexpected error: No response received", error.request);
+      Raven.captureException(error.request);
     } else {
       toast("An unexpected error occurred.");
-      console.error("Unexpected error:", error.message);
+      Raven.captureException(error.message);
     }
 
     return Promise.reject(error); // Let the component handle fallback if needed
