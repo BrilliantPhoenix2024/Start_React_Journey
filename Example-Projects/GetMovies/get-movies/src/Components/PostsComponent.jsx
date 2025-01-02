@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import axiosClient from "../utils/axiosClient";
 import config from "../config.json";
 import "react-toastify/dist/ReactToastify.css";
+import * as Sentry from "@sentry/react";
 
 const PostsComponent = () => {
   const [data, setData] = useState([]);
@@ -100,6 +101,13 @@ const PostsComponent = () => {
       </button>
       <button className="btn btn-secondary mx-4" onClick={sortData}>
         Sort by Title {sortAsc ? "🔼" : "🔽"}
+      </button>
+      <button
+        onClick={() => {
+          throw new Error("This is your first error!");
+        }}
+      >
+        Break the world
       </button>
       <table
         border="1"
