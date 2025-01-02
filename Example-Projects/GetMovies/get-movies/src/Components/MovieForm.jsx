@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Joi from "joi-browser";
 import { useNavigate, useParams } from "react-router-dom";
-import { getMovie } from "../services/fakeMovieServices";
-import { getGenres, saveMovie } from "../services/fakeGenreService";
-import { movies } from "./../services/fakeMovieServices";
+import { saveMovie, getMovie } from "../services/fakeMovieServices";
+import { getGenres } from "../services/fakeGenreService";
+import { toast } from "react-toastify";
 
 const MovieForm = () => {
   const [data, setData] = useState({
-    _id: "",
+    _id: Joi.string().allow("").optional(),
     title: "",
     genreId: "",
     numberInStock: "",
     dailyRentalRate: "",
   });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const { id: movieId } = useParams(); // Correctly destructuring useParams
@@ -26,13 +25,15 @@ const MovieForm = () => {
     genreId: Joi.string()
       .valid(...genres.map((g) => g._id))
       .required()
-      .label("Genre"),
+      .label("Genre")
+      .error(() => new Error("Please select a valid genre from the list.")),
     numberInStock: Joi.number().min(0).required().label("Number In Stock"),
     dailyRentalRate: Joi.number().min(0).max(10).required().label("Rate"),
   });
 
   const validate = () => {
-    const result = schema.validate(data, { abortEarly: false });
+    const { _id, ...dataToValidate } = data;
+    const result = schema.validate(dataToValidate, { abortEarly: false });
     if (!result.error) return null;
 
     const newErrors = {};
@@ -43,39 +44,24 @@ const MovieForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.currentTarget;
-    setData({ ...data, [name]: value });
+    const newValue =
+      name === "numberInStock" || name === "dailyRentalRate"
+        ? Number(value)
+        : value;
+    setData({ ...data, [name]: newValue });
   };
 
   useEffect(() => {
-    const fetchMovie = async () => {
-      if (movieId === "new") {
-        setLoading(false);
-        return;
-      }
+    if (movieId === "new") return;
 
-      console.log(movieId);
+    const movie = getMovie(movieId);
+    if (!movie) {
+      // navigate("/not-found"); // Optional: redirect if movie doesn't exist
+      return;
+    }
 
-      const movie = getMovie(movieId);
-      if (!movie) {
-        return;
-      }
-
-      setData(mapToViewModel(movie));
-      setLoading(false);
-    };
-
-    fetchMovie();
+    setData(mapToViewModel(movie));
   }, [movieId, navigate]);
-
-  // useEffect(() => {
-  //   console.log("Movie ID: ", movieId); // Debugging line
-  //   if (movieId === "new") return; // If it's a new movie, we don't fetch data
-
-  //   const movie = getMovie(movieId);
-  //   if (!movie) return; // Navigate to not found if movie doesn't exist
-
-  //   setData(mapToViewModel(movie)); // Set data if movie is found
-  // }, [movieId, navigate]);
 
   const mapToViewModel = (movie) => {
     return {
@@ -89,26 +75,20 @@ const MovieForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Submitting..."); // 👈 Add this
     const errors = validate();
     setErrors(errors || {});
+    console.log("Validation errors:", errors);
     if (errors) return;
 
     doSubmit();
   };
 
   const doSubmit = () => {
-    saveMovie(data); // Save the new movie
-    setErrors({}); // Clear errors
+    console.log("Saving movie:", data); // 👈 Add this
+    saveMovie(data);
+    toast.success("Movie saved successfully!");
     navigate("/movies");
-
-    // Optionally reset the form
-    setData({
-      _id: "",
-      title: "",
-      genreId: "",
-      numberInStock: "",
-      dailyRentalRate: "",
-    });
   };
 
   return (
@@ -140,7 +120,7 @@ const MovieForm = () => {
           errors.dailyRentalRate,
           "number"
         )}
-        <button type="submit" disabled={validate()} className="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Save
         </button>
       </form>
@@ -174,12 +154,14 @@ const renderSelect = (name, label, value, onChange, error, options) => (
       value={value}
       onChange={onChange}
     >
+      <option value="">Select Genre</option> {/* 👈 Add this line */}
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
         </option>
       ))}
     </select>
+
     {error && <div className="alert alert-danger">{error}</div>}
   </div>
 );
