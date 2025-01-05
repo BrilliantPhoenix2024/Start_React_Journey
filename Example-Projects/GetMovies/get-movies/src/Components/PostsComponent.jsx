@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import axiosClient from "../utils/axiosClient";
+import axiosClient from "../services/axiosClient";
 import config from "../config.json";
 import "react-toastify/dist/ReactToastify.css";
 import * as Sentry from "@sentry/react";
