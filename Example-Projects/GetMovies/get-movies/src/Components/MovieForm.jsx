@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const MovieForm = () => {
   const [data, setData] = useState({
-    _id: Joi.string().allow("").optional(),
+    _id: "",
     title: "",
     genreId: "",
     numberInStock: "",
@@ -52,16 +52,18 @@ const MovieForm = () => {
   };
 
   useEffect(() => {
-    if (movieId === "new") return;
+    // If there's no movieId or it's explicitly "new", render empty form
+    if (!movieId || movieId === "new") return;
 
     const movie = getMovie(movieId);
     if (!movie) {
-      // navigate("/not-found"); // Optional: redirect if movie doesn't exist
+      navigate("/not-found");
       return;
     }
 
     setData(mapToViewModel(movie));
   }, [movieId, navigate]);
+
 
   const mapToViewModel = (movie) => {
     return {
