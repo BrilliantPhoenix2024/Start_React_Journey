@@ -51,18 +51,28 @@ const MovieForm = () => {
     setData({ ...data, [name]: newValue });
   };
 
-  useEffect(() => {
-    // If there's no movieId or it's explicitly "new", render empty form
-    if (!movieId || movieId === "new") return;
+ const populateMovie = () => {
+   const movie = getMovie(movieId);
+   if (!movie) {
+     navigate("/not-found");
+     return null;
+   }
+   return movie;
+ };
 
-    const movie = getMovie(movieId);
-    if (!movie) {
-      navigate("/not-found");
-      return;
-    }
 
-    setData(mapToViewModel(movie));
-  }, [movieId, navigate]);
+useEffect(() => {
+  // If there's no movieId or it's explicitly "new", render empty form
+  if (!movieId || movieId === "new") return;
+
+  try {
+    const movie = populateMovie();
+    if (movie) setData(mapToViewModel(movie));
+  } catch (ex) {
+    navigate("/not-found");
+  }
+}, [movieId, navigate]);
+
 
 
   const mapToViewModel = (movie) => {
