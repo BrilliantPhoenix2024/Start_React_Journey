@@ -102,13 +102,6 @@ const PostsComponent = () => {
       <button className="btn btn-secondary mx-4" onClick={sortData}>
         Sort by Title {sortAsc ? "🔼" : "🔽"}
       </button>
-      <button
-        onClick={() => {
-          throw new Error("This is your first error!");
-        }}
-      >
-        Break the world
-      </button>
       <table
         border="1"
         cellPadding="10"
