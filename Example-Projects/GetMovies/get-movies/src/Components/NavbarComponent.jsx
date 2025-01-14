@@ -3,6 +3,7 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NavbarComponent = () => {
+  const isLoggedIn = !!localStorage.getItem("token"); // Adjust based on your auth logic
   return (
     <Navbar expand="lg" className="mb-5 bg-light">
       <Container className="d-flex justify-content-between align-items-center">
@@ -24,12 +25,26 @@ const NavbarComponent = () => {
             <Nav.Link as={Link} to="/rentals">
               Rentals
             </Nav.Link>
-            <Nav.Link as={Link} to="/login">
-              Login
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
-            </Nav.Link>
+            {!isLoggedIn && (
+              <React.Fragment>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              </React.Fragment>
+            )}
+            {isLoggedIn && (
+              <React.Fragment>
+                <Nav.Link as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/logout">
+                  Logout
+                </Nav.Link>
+              </React.Fragment>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
