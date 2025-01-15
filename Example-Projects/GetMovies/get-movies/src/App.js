@@ -8,6 +8,7 @@ import MovieForm from "./Components/MovieForm";
 import LoginForm from "./Components/LoginForm";
 import RegisterForm from "./Components/RegisterForm.jsx";
 import PostsComponent from "./Components/PostsComponent.jsx";
+import Logout from "./Components/Logout.jsx";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/movies/:id" element={<MovieForm />} />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/posts" element={<PostsComponent />} />
         <Route path="*" element={<h1>Not Found</h1>} />
