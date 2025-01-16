@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.2",
     "font-awesome": "^4.7.0",
     "joi-browser": "13.4",
+    "jwt-decode": "^4.0.0",
     "prop-types": "^15.6.2",
     "random-string": "^0.2.0",
     "raven-js": "^3.27.2",
