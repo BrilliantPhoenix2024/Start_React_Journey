@@ -8,23 +8,16 @@ import MovieForm from "./Components/MovieForm";
 import LoginForm from "./Components/LoginForm";
 import RegisterForm from "./Components/RegisterForm.jsx";
 import PostsComponent from "./Components/PostsComponent.jsx";
-import Logout from "./Components/Logout.jsx";
-import { jwtDecode } from "jwt-decode";
 import Profile from "./Components/Profile.jsx";
+import LogoutForm from "./Components/LogoutForm.jsx";
+import auth from "./services/authService.js";
 
 const App = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    try {
-      const jwt = localStorage.getItem("token");
-      if (jwt) {
-        const decodedUser = jwtDecode(jwt);
-        setUser(decodedUser);
-      }
-    } catch (error) {
-      console.error("Failed to decode JWT:", error);
-    }
+    const user = auth.getCurrentUser();
+    setUser(user);
   }, []);
 
   return (
@@ -39,7 +32,7 @@ const App = () => {
         <Route path="/movies/:id" element={<MovieForm />} />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="/logout" element={<LogoutForm />} />
         <Route path="/profile" element={<Profile user={user} />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/posts" element={<PostsComponent />} />

@@ -3,7 +3,7 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NavbarComponent = ({ user }) => {
-  const isLoggedIn = !user;
+  const isLoggedIn = user;
 
   return (
     <Navbar expand="lg" className="mb-5 bg-light">
@@ -39,7 +39,7 @@ const NavbarComponent = ({ user }) => {
             {isLoggedIn && (
               <React.Fragment>
                 <Nav.Link as={Link} to="/profile">
-                  {user.name || "Guest"}
+                  {user?.name || "Guest"}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/logout">
                   Logout
