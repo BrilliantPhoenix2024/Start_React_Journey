@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
 const apiAuth = apiEndpoint + "/auth";
 const tokenKey = "token";
 
+axiosClient.setJwt(getJwt())
+
 export async function login(email, password) {
   const { data: jwt } = await axiosClient.post(apiAuth, { email, password });
   localStorage.setItem(tokenKey, jwt);

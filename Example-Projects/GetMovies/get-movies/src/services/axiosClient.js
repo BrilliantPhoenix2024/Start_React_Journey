@@ -1,14 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import logger from "./logService";
-import auth from "../services/authService";
 
 const axiosClient = axios.create({
   baseURL: "http://jsonplaceholder.typicode.com",
   timeout: 5000,
 });
-
-axiosClient.defaults.headers.common["x-auth-token"] = auth.getJwt();
 
 // Response interceptor
 axiosClient.interceptors.response.use(
@@ -38,9 +35,14 @@ axiosClient.interceptors.response.use(
   }
 );
 
+function setJwt(jwt) {
+  axiosClient.defaults.headers.common["x-auth-token"] = jwt;
+}
+
 export default {
   get: axiosClient.get,
   post: axiosClient.post,
   put: axiosClient.put,
   delete: axiosClient.delete,
+  setJwt,
 };
