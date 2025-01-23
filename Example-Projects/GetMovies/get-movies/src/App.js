@@ -11,6 +11,7 @@ import PostsComponent from "./Components/PostsComponent.jsx";
 import Profile from "./Components/Profile.jsx";
 import LogoutForm from "./Components/LogoutForm.jsx";
 import auth from "./services/authService.js";
+import ProtectedRoute from "./Components/common/protectedRoute";
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -28,8 +29,22 @@ const App = () => {
         <Route path="/movies" element={<Movies />} />
         <Route path="/customers" element={<Customers />} />
         {/* Dynamic Route for Link Details */}
-        <Route path="/movies/new" element={<MovieForm />} />
-        <Route path="/movies/:id" element={<MovieForm />} />
+        <Route
+          path="/movies/new"
+          element={
+            <ProtectedRoute>
+              <MovieForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/movies/:id"
+          element={
+            <ProtectedRoute>
+              <MovieForm />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/logout" element={<LogoutForm />} />
